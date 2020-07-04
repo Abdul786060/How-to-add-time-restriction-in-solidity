@@ -1,0 +1,33 @@
+pragma solidity ^0.6.0;
+contract MyContract{
+   uint256 public peopleCount=0;
+   uint256 openingTime = 1593830486; //use website name epoch converter and copy the time in second.
+   
+   //modifier owner start.
+   modifier onlyWhileOpen() {
+       require(block.timestamp>=openingTime);
+       _;
+   }
+   //modifier owner end.
+    mapping (uint=>Person) public people;
+    struct Person {
+        uint id;
+        string firstName;
+        string lastName;
+    }
+   
+    //function add person start
+    function addPerson(string memory firstName, string memory lastName) public onlyWhileOpen{
+        increamentalCount();
+        people[peopleCount]= Person(peopleCount,firstName,lastName);
+        
+        
+    }
+    // function add person end.
+    //internal icreamental function start.
+    function increamentalCount() internal {
+        peopleCount+=1;
+    }
+    // internal increamnetal function end.
+    
+}
